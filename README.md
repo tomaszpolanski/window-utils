@@ -4,7 +4,7 @@ A new flutter plugin project.
 
 - Remove MacOS title bar
 
-![](/doc/macos.png)
+![](https://github.com/rive-app/window_utils/blob/master/doc/macos.png?raw=true)
 
 ## Example
 
