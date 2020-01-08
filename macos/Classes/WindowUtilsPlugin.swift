@@ -84,13 +84,6 @@ public class WindowUtils: NSObject, FlutterPlugin {
                 window?.performDrag(with: event)
             }
             result(true)
-        case "setCanMove":
-            let args = call.arguments as? [String: Any]
-            let canMove: Bool? = args?["value"] as? Bool
-            let window = NSApplication.shared.keyWindow
-            window?.isMovableByWindowBackground = canMove ?? true
-            window?.isMovable = canMove ?? true
-            result(true)
         case "childWindowsCount":
             let window = NSApplication.shared.keyWindow
             let count = window?.childWindows?.count ?? 0

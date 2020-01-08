@@ -2,21 +2,22 @@
 
 ## 1.0.1
 
-- getScreenSize (MacOS, Windows)
-- setPosition (MacOS, Windows)
-- setSize (MacOS, Windows)
-- closeWindow (MacOS, Windows)
-- centerWindow (MacOS, Windows)
-- getWindowSize (Windows)
-- getWindowOffset (Windows)
-- windowTitleDoubleTap (MacOS)
+- Removed: `setCanMove`
+- Added: `getScreenSize` (MacOS, Windows)
+- Added: `setPosition` (MacOS, Windows)
+- Added: `setSize` (MacOS, Windows)
+- Added: `closeWindow` (MacOS, Windows)
+- Added: `centerWindow` (MacOS, Windows)
+- Updated: `getWindowSize` (Windows)
+- Updated: `getWindowOffset` (Windows)
+- Added: `windowTitleDoubleTap` (MacOS)
 
 ## 1.0.0
 
-- showTitleBar (MacOS)
-- hideTitleBar (MacOS)
-- setCanMove (MacOS)
-- startDrag (MacOS)
-- childWindowsCount (MacOS)
-- getWindowSize (MacOS)
-- getWindowOffset (MacOS)
+- Added: `showTitleBar` (MacOS)
+- Added: `hideTitleBar` (MacOS)
+- Added: `setCanMove` (MacOS)
+- Added: `startDrag` (MacOS)
+- Added: `childWindowsCount` (MacOS)
+- Added: `getWindowSize` (MacOS)
+- Added: `getWindowOffset` (MacOS)

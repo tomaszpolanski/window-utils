@@ -14,10 +14,6 @@ class WindowUtils {
     return _channel.invokeMethod<bool>('hideTitleBar');
   }
 
-  static Future<bool> setCanMove(bool canMove) {
-    return _channel.invokeMethod<bool>('setCanMove', {"value": canMove});
-  }
-
   static Future<bool> closeWindow() {
     return _channel.invokeMethod<bool>('closeWindow');
   }
