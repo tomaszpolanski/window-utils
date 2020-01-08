@@ -54,7 +54,7 @@ public class WindowUtils: NSObject, FlutterPlugin {
             let window = NSApplication.shared.keyWindow
             window?.center()
             result(true)
-        case "moveWindow":
+        case "setPosition":
             let args = call.arguments as? [String: Any]
             let x: Double = (args?["x"] as? Double)!
             let y: Double = (args?["y"] as? Double)!
@@ -62,7 +62,7 @@ public class WindowUtils: NSObject, FlutterPlugin {
             let window = NSApplication.shared.keyWindow
             window?.setFrameOrigin(point)
             result(true)
-        case "resizeWindow":
+        case "setSize":
             let args = call.arguments as? [String: Any]
             let width: Double = (args?["width"] as? Double)!
             let height: Double = (args?["height"] as? Double)!
@@ -77,9 +77,9 @@ public class WindowUtils: NSObject, FlutterPlugin {
                 window?.performDrag(with: event)
             }
             result(true)
-        case "setMovable":
+        case "setCanMove":
             let args = call.arguments as? [String: Any]
-            let canMove: Bool? = args?["canMove"] as? Bool
+            let canMove: Bool? = args?["value"] as? Bool
             let window = NSApplication.shared.keyWindow
             window?.isMovableByWindowBackground = canMove ?? true
             window?.isMovable = canMove ?? true

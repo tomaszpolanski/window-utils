@@ -14,8 +14,30 @@ class WindowUtils {
     return _channel.invokeMethod<bool>('hideTitleBar');
   }
 
-  static Future<bool> setMoveable(bool canMove) {
-    return _channel.invokeMethod<bool>('setMovable', {"canMove": canMove});
+  static Future<bool> setCanMove(bool canMove) {
+    return _channel.invokeMethod<bool>('setCanMove', {"value": canMove});
+  }
+
+  static Future<bool> closeWindow() {
+    return _channel.invokeMethod<bool>('closeWindow');
+  }
+
+  static Future<bool> centerWindow() {
+    return _channel.invokeMethod<bool>('centerWindow');
+  }
+
+  static Future<bool> setPosition(Offset offset) {
+    return _channel.invokeMethod<bool>('setPosition', {
+      "x": offset.dx,
+      "y": offset.dy,
+    });
+  }
+
+  static Future<bool> setSize(Size size) {
+    return _channel.invokeMethod<bool>('setSize', {
+      "width": size.width,
+      "height": size.height,
+    });
   }
 
   static Future<bool> startDrag() {
