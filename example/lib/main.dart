@@ -118,6 +118,24 @@ class _MyAppState extends State<MyApp> {
                   },
                 ),
               ),
+              ListTile(
+                title: Text("Center Window"),
+                trailing: IconButton(
+                  icon: Icon(Icons.vertical_align_center),
+                  onPressed: () {
+                    WindowUtils.centerWindow();
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text("Close Window"),
+                trailing: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    WindowUtils.closeWindow();
+                  },
+                ),
+              ),
             ],
           ),
         ),

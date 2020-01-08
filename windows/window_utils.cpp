@@ -102,6 +102,39 @@ void WindowUtils::HandleMethodCall(
     flutter::EncodableValue response(umap);
     result->Success(&response);
   }
+  else if (method.compare("closeWindow") == 0)
+  {
+    HWND hWnd = GetActiveWindow();
+    SendMessage(hWnd, WM_CLOSE, 0, NULL);
+    flutter::EncodableValue response(true);
+    result->Success(&response);
+  }
+  else if (method.compare("centerWindow") == 0)
+  {
+    HWND hWnd = GetActiveWindow();
+    RECT rect;
+    bool success = false;
+    HWND hWndScreen = GetDesktopWindow();
+    RECT rectScreen;
+    if (GetWindowRect(hWndScreen, &rectScreen))
+    {
+      double screenWidth = rectScreen.right;
+      double screenHeight = rectScreen.bottom;
+      double centerX = screenWidth / 2;
+      double centerY = screenHeight / 2;
+
+      if (GetWindowRect(hWnd, &rect))
+      {
+        double width = rect.right - rect.left;
+        double height = rect.bottom - rect.top;
+        int x = ((rectScreen.right - rectScreen.left) / 2 - width / 2);
+        int y = ((rectScreen.bottom - rectScreen.top) / 2 - height / 2);
+        success = MoveWindow(hWnd, x, y, width, height, true);
+      }
+    }
+    flutter::EncodableValue response(success);
+    result->Success(&response);
+  }
   else if (method.compare("setSize") == 0)
   {
     const flutter::EncodableValue *args = method_call.arguments();

@@ -5,10 +5,11 @@
 - getScreenSize (MacOS, Windows)
 - setPosition (MacOS, Windows)
 - setSize (MacOS, Windows)
-- closeWindow (MacOS)
-- centerWindow (MacOS)
-- getWindowSize (windows)
-- getWindowOffset (windows)
+- closeWindow (MacOS, Windows)
+- centerWindow (MacOS, Windows)
+- getWindowSize (Windows)
+- getWindowOffset (Windows)
+- windowTitleDoubleTap (MacOS)
 
 ## 1.0.0
 
@@ -16,7 +17,6 @@
 - hideTitleBar (MacOS)
 - setCanMove (MacOS)
 - startDrag (MacOS)
-- windowTitleDoubleTap (MacOS)
 - childWindowsCount (MacOS)
 - getWindowSize (MacOS)
 - getWindowOffset (MacOS)
