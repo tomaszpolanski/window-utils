@@ -22,12 +22,14 @@
 #include <flutter/standard_method_codec.h>
 #include <memory>
 #include <sstream>
-#include <unordered_map> 
+#include <unordered_map>
 
-namespace {
+namespace
+{
 
-class WindowUtils : public flutter::Plugin {
- public:
+class WindowUtils : public flutter::Plugin
+{
+public:
   static void RegisterWithRegistrar(flutter::PluginRegistrar *registrar);
 
   // Creates a plugin that communicates on the given channel.
@@ -36,7 +38,7 @@ class WindowUtils : public flutter::Plugin {
 
   virtual ~WindowUtils();
 
- private:
+private:
   // Called when a method is called on |channel_|;
   void HandleMethodCall(
       const flutter::MethodCall<flutter::EncodableValue> &method_call,
@@ -47,7 +49,8 @@ class WindowUtils : public flutter::Plugin {
 };
 
 // static
-void WindowUtils::RegisterWithRegistrar(flutter::PluginRegistrar *registrar) {
+void WindowUtils::RegisterWithRegistrar(flutter::PluginRegistrar *registrar)
+{
   auto channel =
       std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
           registrar->messenger(), "window_utils",
@@ -72,20 +75,24 @@ WindowUtils::~WindowUtils(){};
 
 void WindowUtils::HandleMethodCall(
     const flutter::MethodCall<flutter::EncodableValue> &method_call,
-    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
+    std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+{
   std::string method = method_call.method_name();
-  printf("Method is %s \n" , method.c_str());
-  if (method.compare("hideTitleBar") == 0) {
+  printf("Method is %s \n", method.c_str());
+  if (method.compare("hideTitleBar") == 0)
+  {
     HWND hWnd = GetActiveWindow();
     SetMenu(hWnd, NULL);
     // SetWindowLong(hWnd,GWL_STYLE,WS_EX_LAYERED);
     flutter::EncodableValue response(true);
     result->Success(&response);
-  } else if (method.compare("getScreenSize") == 0) {
+  }
+  else if (method.compare("getScreenSize") == 0)
+  {
     flutter::EncodableMap umap;
     HWND hWnd = GetDesktopWindow();
     RECT rect;
-    if(GetWindowRect(hWnd, &rect))
+    if (GetWindowRect(hWnd, &rect))
     {
       double width = rect.right;
       double height = rect.bottom;
@@ -94,11 +101,49 @@ void WindowUtils::HandleMethodCall(
     }
     flutter::EncodableValue response(umap);
     result->Success(&response);
-  } else if (method.compare("getWindowSize") == 0) {
+  }
+  else if (method.compare("setSize") == 0)
+  {
+    const flutter::EncodableValue *args = method_call.arguments();
+    const flutter::EncodableMap &map = args->MapValue();
+    double width = map.at(flutter::EncodableValue("width")).DoubleValue();
+    double height = map.at(flutter::EncodableValue("height")).DoubleValue();
+    HWND hWnd = GetActiveWindow();
+    RECT rect;
+    bool success = false;
+    if (GetWindowRect(hWnd, &rect))
+    {
+      double x = rect.left;
+      double y = rect.top;
+      success = MoveWindow(hWnd, x, y, width, height, true);
+    }
+    flutter::EncodableValue response(success);
+    result->Success(&response);
+  }
+  else if (method.compare("setPosition") == 0)
+  {
+    const flutter::EncodableValue *args = method_call.arguments();
+    const flutter::EncodableMap &map = args->MapValue();
+    double x = map.at(flutter::EncodableValue("x")).DoubleValue();
+    double y = map.at(flutter::EncodableValue("y")).DoubleValue();
+    HWND hWnd = GetActiveWindow();
+    RECT rect;
+    bool success = false;
+    if (GetWindowRect(hWnd, &rect))
+    {
+      double width = rect.right - rect.left;
+      double height = rect.bottom - rect.top;
+      success = MoveWindow(hWnd, x, y, width, height, true);
+    }
+    flutter::EncodableValue response(success);
+    result->Success(&response);
+  }
+  else if (method.compare("getWindowSize") == 0)
+  {
     flutter::EncodableMap umap;
     HWND hWnd = GetActiveWindow();
     RECT rect;
-    if(GetWindowRect(hWnd, &rect))
+    if (GetWindowRect(hWnd, &rect))
     {
       double width = rect.right - rect.left;
       double height = rect.bottom - rect.top;
@@ -107,11 +152,13 @@ void WindowUtils::HandleMethodCall(
     }
     flutter::EncodableValue response(umap);
     result->Success(&response);
-  } else if (method.compare("getWindowOffset") == 0) {
+  }
+  else if (method.compare("getWindowOffset") == 0)
+  {
     flutter::EncodableMap umap;
     HWND hWnd = GetActiveWindow();
     RECT rect;
-    if(GetWindowRect(hWnd, &rect))
+    if (GetWindowRect(hWnd, &rect))
     {
       double offsetX = rect.left;
       double offsetY = rect.top;
@@ -120,15 +167,18 @@ void WindowUtils::HandleMethodCall(
     }
     flutter::EncodableValue response(umap);
     result->Success(&response);
-  } else {
+  }
+  else
+  {
     result->NotImplemented();
   }
 }
 
-}  // namespace
+} // namespace
 
 void WindowUtilsRegisterWithRegistrar(
-    FlutterDesktopPluginRegistrarRef registrar) {
+    FlutterDesktopPluginRegistrarRef registrar)
+{
   // The plugin registrar owns the plugin, registered callbacks, etc., so must
   // remain valid for the life of the application.
   static auto *plugin_registrar = new flutter::PluginRegistrar(registrar);

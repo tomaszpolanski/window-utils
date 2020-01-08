@@ -89,7 +89,38 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
         ),
-        body: Container(),
+        body: Container(
+          child: ListView(
+            children: <Widget>[
+              ListTile(
+                title: Text("Increase Window Size"),
+                trailing: IconButton(
+                  icon: Icon(Icons.desktop_windows),
+                  onPressed: () {
+                    WindowUtils.getWindowSize().then((val) {
+                      WindowUtils.setSize(
+                        Size(val.width + 20, val.height + 20),
+                      );
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text("Move Window Position"),
+                trailing: IconButton(
+                  icon: Icon(Icons.drag_handle),
+                  onPressed: () {
+                    WindowUtils.getWindowOffset().then((val) {
+                      WindowUtils.setPosition(
+                        Offset(val.dx + 20, val.dy + 20),
+                      );
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
