@@ -1,8 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:window_utils/window_utils.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  if (!kIsWeb && debugDefaultTargetPlatformOverride == null) {
+    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+  }
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   @override

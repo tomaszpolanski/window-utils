@@ -24,15 +24,15 @@
 
 namespace {
 
-class WindowUtilsPlugin : public flutter::Plugin {
+class WindowUtils : public flutter::Plugin {
  public:
   static void RegisterWithRegistrar(flutter::PluginRegistrar *registrar);
 
   // Creates a plugin that communicates on the given channel.
-  WindowUtilsPlugin(
+  WindowUtils(
       std::unique_ptr<flutter::MethodChannel<flutter::EncodableValue>> channel);
 
-  virtual ~WindowUtilsPlugin();
+  virtual ~WindowUtils();
 
  private:
   // Called when a method is called on |channel_|;
@@ -45,14 +45,14 @@ class WindowUtilsPlugin : public flutter::Plugin {
 };
 
 // static
-void WindowUtilsPlugin::RegisterWithRegistrar(flutter::PluginRegistrar *registrar) {
+void WindowUtils::RegisterWithRegistrar(flutter::PluginRegistrar *registrar) {
   auto channel =
       std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
           registrar->messenger(), "window_utils",
           &flutter::StandardMethodCodec::GetInstance());
   auto *channel_pointer = channel.get();
 
-  auto plugin = std::make_unique<WindowUtilsPlugin>(std::move(channel));
+  auto plugin = std::make_unique<WindowUtils>(std::move(channel));
 
   channel_pointer->SetMethodCallHandler(
       [plugin_pointer = plugin.get()](const auto &call, auto result) {
@@ -62,13 +62,13 @@ void WindowUtilsPlugin::RegisterWithRegistrar(flutter::PluginRegistrar *registra
   registrar->AddPlugin(std::move(plugin));
 }
 
-WindowUtilsPlugin::WindowUtilsPlugin(
+WindowUtils::WindowUtils(
     std::unique_ptr<flutter::MethodChannel<flutter::EncodableValue>> channel)
     : channel_(std::move(channel)) {}
 
-WindowUtilsPlugin::~WindowUtilsPlugin(){};
+WindowUtils::~WindowUtils(){};
 
-void WindowUtilsPlugin::HandleMethodCall(
+void WindowUtils::HandleMethodCall(
     const flutter::MethodCall<flutter::EncodableValue> &method_call,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
   if (method_call.method_name().compare("getPlatformVersion") == 0) {
@@ -91,11 +91,11 @@ void WindowUtilsPlugin::HandleMethodCall(
 
 }  // namespace
 
-void WindowUtilsPluginRegisterWithRegistrar(
+void WindowUtilsRegisterWithRegistrar(
     FlutterDesktopPluginRegistrarRef registrar) {
   // The plugin registrar owns the plugin, registered callbacks, etc., so must
   // remain valid for the life of the application.
   static auto *plugin_registrar = new flutter::PluginRegistrar(registrar);
 
-  WindowUtilsPlugin::RegisterWithRegistrar(plugin_registrar);
+  WindowUtils::RegisterWithRegistrar(plugin_registrar);
 }

@@ -1,21 +1,23 @@
 name: window_utils
-description: A minimal example plugin for desktop, in the style of the 'flutter create' plugin template.
-version: 0.0.1
-author:
-homepage:
+description: A flutter plugin for managing window decoration.
+version: 1.0.0
+authors:
+  - Rhodes Davis Jr. <rody.davis.jr@gmail.com>
+  - Rive <info@rive.app>
+homepage: https://github.com/rive-app/window_utils
+environment:
+  sdk: ">=2.0.0-dev.28.0 <3.0.0"
+  flutter: ">=1.12.8 <2.0.0"
 
 flutter:
   plugin:
     platforms:
       linux:
-        pluginClass: WindowUtilsPlugin
+        pluginClass: WindowUtils
       macos:
-        pluginClass: WindowUtilsPlugin
+        pluginClass: WindowUtils
       windows:
-        pluginClass: WindowUtilsPlugin
-
-environment:
-  sdk: ">=2.1.0 <3.0.0"
+        pluginClass: WindowUtils
 
 dependencies:
   flutter:
