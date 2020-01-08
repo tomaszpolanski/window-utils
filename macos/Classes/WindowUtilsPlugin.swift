@@ -41,6 +41,35 @@ public class WindowUtils: NSObject, FlutterPlugin {
             let window = NSApplication.shared.keyWindow
             window?.styleMask.update(with: .titled)
             result(true)
+        case "windowTitleDoubleTap":
+            let window = NSApplication.shared.keyWindow
+            let isZoomed = window?.isZoomed ?? false
+            window?.setIsZoomed(!isZoomed)
+            result(true)
+        case "closeWindow":
+            let window = NSApplication.shared.keyWindow
+            window?.close()
+            result(true)
+        case "centerWindow":
+            let window = NSApplication.shared.keyWindow
+            window?.center()
+            result(true)
+        case "moveWindow":
+            let args = call.arguments as? [String: Any]
+            let x: Double = (args?["x"] as? Double)!
+            let y: Double = (args?["y"] as? Double)!
+            let point: NSPoint = NSPoint(x: x, y: y)
+            let window = NSApplication.shared.keyWindow
+            window?.setFrameOrigin(point)
+            result(true)
+        case "resizeWindow":
+            let args = call.arguments as? [String: Any]
+            let width: Double = (args?["width"] as? Double)!
+            let height: Double = (args?["height"] as? Double)!
+            let size: NSSize = NSSize(width: width, height: height)
+            let window = NSApplication.shared.keyWindow
+            window?.setContentSize(size)
+            result(true)
         case "startDrag":
             let window = NSApplication.shared.keyWindow
             if let event: NSEvent = window?.currentEvent

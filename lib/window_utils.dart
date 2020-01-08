@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class WindowUtils {
-   static const MethodChannel _channel = const MethodChannel('window_utils');
+  static const MethodChannel _channel = const MethodChannel('window_utils');
 
   static Future showTitleBar() {
     return _channel.invokeMethod<bool>('showTitleBar');
@@ -20,6 +20,10 @@ class WindowUtils {
 
   static Future<bool> startDrag() {
     return _channel.invokeMethod<bool>('startDrag');
+  }
+
+  static Future<bool> windowTitleDoubleTap() {
+    return _channel.invokeMethod<bool>('windowTitleDoubleTap');
   }
 
   static Future<int> childWindowsCount() {

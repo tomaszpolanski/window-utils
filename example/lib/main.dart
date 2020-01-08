@@ -41,6 +41,9 @@ class _MyAppState extends State<MyApp> {
                   onTapDown: (_) {
                     WindowUtils.startDrag();
                   },
+                  onDoubleTap: () {
+                    WindowUtils.windowTitleDoubleTap();
+                  },
                   child: Material(
                     elevation: 4.0,
                     color: Theme.of(context).primaryColor,
