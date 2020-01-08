@@ -74,8 +74,12 @@ class _MyAppState extends State<MyApp> {
                         color: Colors.white,
                         icon: Icon(Icons.info_outline),
                         onPressed: () {
-                          WindowUtils.getWindowSize().then(print);
-                          WindowUtils.getWindowOffset().then(print);
+                          WindowUtils.getWindowSize()
+                              .then((val) => print('Window: $val'));
+                          WindowUtils.getScreenSize()
+                              .then((val) => print('Screen: $val'));
+                          WindowUtils.getWindowOffset()
+                              .then((val) => print('Offset: $val'));
                         },
                       ),
                     ],

@@ -81,6 +81,19 @@ void WindowUtils::HandleMethodCall(
     // SetWindowLong(hWnd,GWL_STYLE,WS_EX_LAYERED);
     flutter::EncodableValue response(true);
     result->Success(&response);
+  } else if (method.compare("getScreenSize") == 0) {
+    flutter::EncodableMap umap;
+    HWND hWnd = GetDesktopWindow();
+    RECT rect;
+    if(GetWindowRect(hWnd, &rect))
+    {
+      double width = rect.right;
+      double height = rect.bottom;
+      umap[flutter::EncodableValue("width")] = flutter::EncodableValue(width);
+      umap[flutter::EncodableValue("height")] = flutter::EncodableValue(height);
+    }
+    flutter::EncodableValue response(umap);
+    result->Success(&response);
   } else if (method.compare("getWindowSize") == 0) {
     flutter::EncodableMap umap;
     HWND hWnd = GetActiveWindow();
