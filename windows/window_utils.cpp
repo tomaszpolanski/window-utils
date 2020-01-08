@@ -74,7 +74,7 @@ void WindowUtils::HandleMethodCall(
   if (method_call.method_name().compare("hideTitleBar") == 0) {
     HWND hWnd = GetActiveWindow();
     SetMenu(hWnd, NULL);
-    SetWindowLong(hWnd,GWL_STYLE,WS_EX_LAYERED);
+    // SetWindowLong(hWnd,GWL_STYLE,WS_EX_LAYERED);
     flutter::EncodableValue response(true);
     result->Success(&response);
   } else if (method_call.method_name().compare("getPlatformVersion") == 0) {
