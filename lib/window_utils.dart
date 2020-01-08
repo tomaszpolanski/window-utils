@@ -52,6 +52,12 @@ class WindowUtils {
     return _channel.invokeMethod<int>('childWindowsCount');
   }
 
+  /// Size of Screen that the current window is inside
+  static Future<Size> getScreenSize() async {
+    final _data = await _channel.invokeMethod<Map>('getScreenSize');
+    return Size(_data['width'] as double, _data['height'] as double);
+  }
+
   static Future<Size> getWindowSize() async {
     final _data = await _channel.invokeMethod<Map>('getWindowSize');
     return Size(_data['width'] as double, _data['height'] as double);

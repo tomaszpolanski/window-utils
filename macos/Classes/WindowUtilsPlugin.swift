@@ -24,6 +24,13 @@ public class WindowUtils: NSObject, FlutterPlugin {
             _output["width"] = Double(size?.width ?? 0)
             _output["height"] = Double(size?.height ?? 0)
             result(_output)
+        case "getScreenSize":
+            let window = NSApplication.shared.keyWindow
+            let size = window?.screen?.frame.size
+            var _output: [String: Any?] = [:]
+            _output["width"] = Double(size?.width ?? 0)
+            _output["height"] = Double(size?.height ?? 0)
+            result(_output)
         case "hideTitleBar":
             if let window = NSApplication.shared.mainWindow
             {
