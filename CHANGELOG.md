@@ -2,6 +2,7 @@
 
 ## 1.0.1
 
+- getScreenSize (MacOS)
 - setPosition (MacOS)
 - setSize (MacOS)
 - closeWindow (MacOS)
