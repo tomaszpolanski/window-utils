@@ -71,7 +71,13 @@ WindowUtils::~WindowUtils(){};
 void WindowUtils::HandleMethodCall(
     const flutter::MethodCall<flutter::EncodableValue> &method_call,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
-  if (method_call.method_name().compare("getPlatformVersion") == 0) {
+  if (method_call.method_name().compare("hideTitleBar") == 0) {
+    HWND hWnd = GetActiveWindow();
+    SetMenu(hWnd, NULL);
+    SetWindowLong(hWnd,GWL_STYLE,WS_EX_LAYERED);
+    flutter::EncodableValue response(true);
+    result->Success(&response);
+  } else if (method_call.method_name().compare("getPlatformVersion") == 0) {
     std::ostringstream version_stream;
     version_stream << "Windows ";
 	// The result returned here will depend on the app manifest of the runner.
