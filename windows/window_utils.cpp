@@ -14,6 +14,7 @@
 #include "window_utils.h"
 
 #include <windows.h>
+#include <iostream>
 
 #include <VersionHelpers.h>
 #include <flutter/method_channel.h>
@@ -21,6 +22,7 @@
 #include <flutter/standard_method_codec.h>
 #include <memory>
 #include <sstream>
+#include <unordered_map> 
 
 namespace {
 
@@ -71,24 +73,39 @@ WindowUtils::~WindowUtils(){};
 void WindowUtils::HandleMethodCall(
     const flutter::MethodCall<flutter::EncodableValue> &method_call,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
-  if (method_call.method_name().compare("hideTitleBar") == 0) {
+  std::string method = method_call.method_name();
+  printf("Method is %s \n" , method.c_str());
+  if (method.compare("hideTitleBar") == 0) {
     HWND hWnd = GetActiveWindow();
     SetMenu(hWnd, NULL);
     // SetWindowLong(hWnd,GWL_STYLE,WS_EX_LAYERED);
     flutter::EncodableValue response(true);
     result->Success(&response);
-  } else if (method_call.method_name().compare("getPlatformVersion") == 0) {
-    std::ostringstream version_stream;
-    version_stream << "Windows ";
-	// The result returned here will depend on the app manifest of the runner.
-    if (IsWindows10OrGreater()) {
-      version_stream << "10+";
-    } else if (IsWindows8OrGreater()) {
-      version_stream << "8";
-    } else if (IsWindows7OrGreater()) {
-      version_stream << "7";
+  } else if (method.compare("getWindowSize") == 0) {
+    flutter::EncodableMap umap;
+    HWND hWnd = GetActiveWindow();
+    RECT rect;
+    if(GetWindowRect(hWnd, &rect))
+    {
+      double width = rect.right - rect.left;
+      double height = rect.bottom - rect.top;
+      umap[flutter::EncodableValue("width")] = flutter::EncodableValue(width);
+      umap[flutter::EncodableValue("height")] = flutter::EncodableValue(height);
     }
-    flutter::EncodableValue response(version_stream.str());
+    flutter::EncodableValue response(umap);
+    result->Success(&response);
+  } else if (method.compare("getWindowOffset") == 0) {
+    flutter::EncodableMap umap;
+    HWND hWnd = GetActiveWindow();
+    RECT rect;
+    if(GetWindowRect(hWnd, &rect))
+    {
+      double offsetX = rect.left;
+      double offsetY = rect.top;
+      umap[flutter::EncodableValue("offsetX")] = flutter::EncodableValue(offsetX);
+      umap[flutter::EncodableValue("offsetY")] = flutter::EncodableValue(offsetY);
+    }
+    flutter::EncodableValue response(umap);
     result->Success(&response);
   } else {
     result->NotImplemented();
