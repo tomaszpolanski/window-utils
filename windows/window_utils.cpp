@@ -29,6 +29,7 @@ namespace
 class WindowUtils : public flutter::Plugin
 {
   RECT normalRect;
+  LONG oldStyle;
 
 public:
   static void RegisterWithRegistrar(flutter::PluginRegistrar *registrar);
@@ -79,14 +80,13 @@ void WindowUtils::HandleMethodCall(
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
 {
   std::string method = method_call.method_name();
-  printf("Method is %s \n", method.c_str());
+  // printf("Method is %s \n", method.c_str());
   if (method.compare("hideTitleBar") == 0)
   {
     HWND hWnd = GetActiveWindow();
     SetMenu(hWnd, NULL);
     LONG lStyle = GetWindowLong(hWnd, GWL_STYLE);
-    // lStyle &= ~(WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SYSMENU);
-    // lStyle &= WS_DLGFRAME;
+    oldStyle = lStyle;
     lStyle &= ~(WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SYSMENU | WS_DLGFRAME);
     SetWindowLong(hWnd, GWL_STYLE, lStyle);
     LONG flags = SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER;
@@ -97,8 +97,7 @@ void WindowUtils::HandleMethodCall(
   else if (method.compare("showTitleBar") == 0)
   {
     HWND hWnd = GetActiveWindow();
-    SetMenu(hWnd, NULL);
-    // SetWindowLong(hWnd,GWL_STYLE,WS_EX_LAYERED);
+    SetWindowLong(hWnd, GWL_STYLE, oldStyle);
     flutter::EncodableValue response(true);
     result->Success(&response);
   }
