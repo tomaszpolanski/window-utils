@@ -18,6 +18,14 @@ class WindowUtils {
     return _channel.invokeMethod<bool>('closeWindow');
   }
 
+  static Future<bool> minWindow() {
+    return _channel.invokeMethod<bool>('minWindow');
+  }
+
+  static Future<bool> maxWindow() {
+    return _channel.invokeMethod<bool>('maxWindow');
+  }
+
   static Future<bool> centerWindow() {
     return _channel.invokeMethod<bool>('centerWindow');
   }
@@ -40,10 +48,32 @@ class WindowUtils {
     return _channel.invokeMethod<bool>('startDrag');
   }
 
+  /// [Windows] Only
+  static Future<bool> startResize(DragPosition position) {
+    return _channel.invokeMethod<bool>(
+      'startResize',
+      {
+        "top": position == DragPosition.top ||
+            position == DragPosition.topLeft ||
+            position == DragPosition.topRight,
+        "bottom": position == DragPosition.bottom ||
+            position == DragPosition.bottomLeft ||
+            position == DragPosition.bottomRight,
+        "right": position == DragPosition.right ||
+            position == DragPosition.topRight ||
+            position == DragPosition.bottomRight,
+        "left": position == DragPosition.left ||
+            position == DragPosition.topLeft ||
+            position == DragPosition.bottomLeft,
+      },
+    );
+  }
+
   static Future<bool> windowTitleDoubleTap() {
     return _channel.invokeMethod<bool>('windowTitleDoubleTap');
   }
 
+  /// [MacOS] Only
   static Future<int> childWindowsCount() {
     return _channel.invokeMethod<int>('childWindowsCount');
   }
@@ -63,4 +93,15 @@ class WindowUtils {
     final _data = await _channel.invokeMethod<Map>('getWindowOffset');
     return Offset(_data['offsetX'] as double, _data['offsetY'] as double);
   }
+}
+
+enum DragPosition {
+  top,
+  left,
+  right,
+  bottom,
+  topLeft,
+  bottomLeft,
+  topRight,
+  bottomRight
 }

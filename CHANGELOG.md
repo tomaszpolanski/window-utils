@@ -3,6 +3,8 @@
 ## 1.0.1
 
 - Removed: `setCanMove`
+- Added: `minWindow` (Windows)
+- Added: `maxWindow` (Windows)
 - Added: `getScreenSize` (MacOS, Windows)
 - Added: `setPosition` (MacOS, Windows)
 - Added: `setSize` (MacOS, Windows)
@@ -10,7 +12,7 @@
 - Added: `centerWindow` (MacOS, Windows)
 - Updated: `getWindowSize` (Windows)
 - Updated: `getWindowOffset` (Windows)
-- Added: `windowTitleDoubleTap` (MacOS)
+- Added: `windowTitleDoubleTap` (MacOS, Windows)
 
 ## 1.0.0
 
