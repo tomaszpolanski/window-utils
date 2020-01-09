@@ -18,10 +18,12 @@ class WindowUtils {
     return _channel.invokeMethod<bool>('closeWindow');
   }
 
+  /// [Windows] Only
   static Future<bool> minWindow() {
     return _channel.invokeMethod<bool>('minWindow');
   }
 
+  /// [Windows] Only
   static Future<bool> maxWindow() {
     return _channel.invokeMethod<bool>('maxWindow');
   }
