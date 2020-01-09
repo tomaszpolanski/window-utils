@@ -16,7 +16,7 @@ or the latest from git
 ```yaml
 dependencies:
   window_utils:
-    git: https://github.com/rive-app/window_utils
+    git: https://github.com/rive-app/window-utils
 ```
 
 ### MacOS
