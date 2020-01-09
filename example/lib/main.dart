@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:window_utils/window_utils.dart';
+import 'package:window_utils/window_frame.dart';
 
 void main() {
   if (!kIsWeb && debugDefaultTargetPlatformOverride == null) {
@@ -96,9 +98,6 @@ class _MyAppState extends State<MyApp> {
               ],
             ),
           ),
-          floatingActionButton: InkWell(
-            child: Icon(Icons.drag_handle),
-          ),
           body: ListView(
             children: <Widget>[
               ListTile(
@@ -157,115 +156,39 @@ class _MyAppState extends State<MyApp> {
                   },
                 ),
               ),
+              ListTile(
+                title: Text("Change Cursor"),
+                // trailing: IconButton(
+                //   icon: Icon(Icons.add),
+                //   onPressed: () {
+                //     final _size = CursorType.values.length;
+                //     final _randomNum = Random.secure().nextInt(_size);
+                //     final _newCursor = CursorType.values[_randomNum];
+                //     WindowUtils.addCursorToStack(_newCursor);
+                //   },
+                // ),
+                subtitle: DropdownButton<CursorType>(
+                  value: CursorType.arrow,
+                  items: CursorType.values
+                      .map((t) => DropdownMenuItem(
+                            value: t,
+                            child: Text(describeEnum(t)),
+                          ))
+                      .toList(),
+                  onChanged: (val) {
+                    WindowUtils.setCursor(val);
+                  },
+                ),
+                trailing: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    WindowUtils.resetCursor();
+                  },
+                ),
+              ),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class WindowsFrame extends StatelessWidget {
-  final Widget child;
-  final bool active;
-  final BoxBorder border;
-
-  const WindowsFrame({
-    Key key,
-    @required this.child,
-    @required this.active,
-    this.border,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    if (!active) return child;
-    final width = 4.0;
-    final height = 4.0;
-    return Container(
-      child: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          border != null
-              ? Container(
-                  decoration: BoxDecoration(border: border),
-                  child: child,
-                )
-              : child,
-          Positioned(
-            top: 0,
-            left: width,
-            right: width,
-            height: height,
-            child: GestureDetector(
-              onTapDown: (_) => WindowUtils.startResize(DragPosition.top),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: width,
-            right: width,
-            height: height,
-            child: GestureDetector(
-              onTapDown: (_) => WindowUtils.startResize(DragPosition.bottom),
-            ),
-          ),
-          Positioned(
-            bottom: height,
-            top: height,
-            right: 0,
-            width: width,
-            child: GestureDetector(
-              onTapDown: (_) => WindowUtils.startResize(DragPosition.right),
-            ),
-          ),
-          Positioned(
-            bottom: height,
-            top: height,
-            left: 0,
-            width: width,
-            child: GestureDetector(
-              onTapDown: (_) => WindowUtils.startResize(DragPosition.left),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            height: height,
-            width: width,
-            child: GestureDetector(
-              onTapDown: (_) => WindowUtils.startResize(DragPosition.topLeft),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            right: 0,
-            height: height,
-            width: width,
-            child: GestureDetector(
-              onTapDown: (_) => WindowUtils.startResize(DragPosition.topRight),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            height: height,
-            width: width,
-            child: GestureDetector(
-              onTapDown: (_) =>
-                  WindowUtils.startResize(DragPosition.bottomLeft),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            height: height,
-            width: width,
-            child: GestureDetector(
-              onTapDown: (_) =>
-                  WindowUtils.startResize(DragPosition.bottomRight),
-            ),
-          ),
-        ],
       ),
     );
   }
