@@ -158,15 +158,6 @@ class _MyAppState extends State<MyApp> {
               ),
               ListTile(
                 title: Text("Change Cursor"),
-                // trailing: IconButton(
-                //   icon: Icon(Icons.add),
-                //   onPressed: () {
-                //     final _size = CursorType.values.length;
-                //     final _randomNum = Random.secure().nextInt(_size);
-                //     final _newCursor = CursorType.values[_randomNum];
-                //     WindowUtils.addCursorToStack(_newCursor);
-                //   },
-                // ),
                 subtitle: DropdownButton<CursorType>(
                   value: CursorType.arrow,
                   items: CursorType.values
