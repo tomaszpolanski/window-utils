@@ -51,7 +51,8 @@ bool Win32Window::CreateAndShow(const std::wstring &title, const Point &origin,
 
 WNDCLASS Win32Window::RegisterWindowClass() {
   WNDCLASS window_class{};
-  window_class.hCursor = LoadCursor(nullptr, IDC_ARROW);
+  // window_class.hCursor = LoadCursor(nullptr, IDC_ARROW);
+  window_class.hCursor = nullptr;
   window_class.lpszClassName = kClassName;
   window_class.style = CS_HREDRAW | CS_VREDRAW;
   window_class.cbClsExtra = 0;
