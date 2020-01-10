@@ -145,7 +145,7 @@ class WindowUtils {
   static String _getCursor(
       CursorType cursor, MacOSCursorType macOS, WindowsCursorType windows) {
     if (Platform.isMacOS) {
-      if (macOS != null) {
+      if (macOS == null) {
         switch (cursor) {
           case CursorType.arrow:
             macOS = MacOSCursorType.arrow;
@@ -179,7 +179,7 @@ class WindowUtils {
       return describeEnum(macOS);
     }
     if (Platform.isWindows) {
-      if (windows != null) {
+      if (windows == null) {
         switch (cursor) {
           case CursorType.arrow:
             windows = WindowsCursorType.arrow;

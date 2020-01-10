@@ -361,80 +361,72 @@ void WindowUtils::HandleMethodCall(
     bool update = map.at(flutter::EncodableValue("update")).BoolValue();
     std::string type = map.at(flutter::EncodableValue("type")).StringValue();
     HCURSOR cursor;
-    HINSTANCE instance = GetModuleHandle(NULL);
+    // HWND hWnd = GetActiveWindow();
+    // HINSTANCE instance = GetModuleHandle(0);
+    // set wincl.hCursor = NULL;
     if (type.compare("appStart") == 0)
     {
-      LPWSTR type = IDC_APPSTARTING;
-      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+      cursor = LoadCursor(NULL, IDC_APPSTARTING);
     }
     else if (type.compare("arrow") == 0)
     {
-      LPWSTR type = IDC_ARROW;
-      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+      cursor = LoadCursor(NULL, IDC_ARROW);
     }
     else if (type.compare("cross") == 0)
     {
-      LPWSTR type = IDC_CROSS;
-      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+      cursor = LoadCursor(NULL, IDC_CROSS);
     }
     else if (type.compare("hand") == 0)
     {
-      LPWSTR type = IDC_HAND;
-      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+      cursor = LoadCursor(NULL, IDC_HAND);
     }
     else if (type.compare("help") == 0)
     {
-      LPWSTR type = IDC_HELP;
-      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+      cursor = LoadCursor(NULL, IDC_HELP);
     }
     else if (type.compare("iBeam") == 0)
     {
-      LPWSTR type = IDC_IBEAM;
-      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+      cursor = LoadCursor(NULL, IDC_IBEAM);
     }
     else if (type.compare("no") == 0)
     {
-      LPWSTR type = IDC_NO;
-      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+      cursor = LoadCursor(NULL, IDC_NO);
     }
     else if (type.compare("resizeAll") == 0)
     {
-      LPWSTR type = IDC_SIZEALL;
-      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+      cursor = LoadCursor(NULL, IDC_SIZEALL);
     }
     else if (type.compare("resizeNESW") == 0)
     {
-      LPWSTR type = IDC_SIZENESW;
-      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+      cursor = LoadCursor(NULL, IDC_SIZENESW);
     }
     else if (type.compare("resizeNS") == 0)
     {
-      LPWSTR type = IDC_SIZENS;
-      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+      cursor = LoadCursor(NULL, IDC_SIZENS);
     }
     else if (type.compare("resizeNWSE") == 0)
     {
-      LPWSTR type = IDC_SIZENWSE;
-      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+      cursor = LoadCursor(NULL, IDC_SIZENWSE);
     }
     else if (type.compare("resizeWE") == 0)
     {
-      LPWSTR type = IDC_SIZEWE;
-      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+      cursor = LoadCursor(NULL, IDC_SIZEWE);
     }
     else if (type.compare("upArrow") == 0)
     {
-      LPWSTR type = IDC_UPARROW;
-      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+      cursor = LoadCursor(NULL, IDC_UPARROW);
     }
     else if (type.compare("wait") == 0)
     {
-      LPWSTR type = IDC_WAIT;
-      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+      cursor = LoadCursor(NULL, IDC_WAIT);
+    }
+    else
+    {
+      cursor = LoadCursor(NULL, IDC_ARROW);
     }
     if (update)
     {
-      
+      SetCursor(cursor);
     }
     else
     {
