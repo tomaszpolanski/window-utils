@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -105,22 +106,26 @@ class WindowUtils {
     return _channel.invokeMethod<bool>('showCursor');
   }
 
-  static Future<bool> setCursor(CursorType cursor) {
+  static Future<bool> setCursor(CursorType cursor,
+      {MacOSCursorType macOS, WindowsCursorType windows}) {
+    String name = _getCursor(cursor, macOS, windows);
     return _channel.invokeMethod<bool>(
       'setCursor',
       {
-        "type": describeEnum(cursor),
+        "type": name,
         "update": false,
       },
     );
   }
 
-  static Future<bool> addCursorToStack(CursorType cursor) {
+  static Future<bool> addCursorToStack(CursorType cursor,
+      {MacOSCursorType macOS, WindowsCursorType windows}) {
+    String name = _getCursor(cursor, macOS, windows);
     return _channel.invokeMethod<bool>(
       'setCursor',
       {
         "type": describeEnum(cursor),
-        "update": true,
+        "update": name,
       },
     );
   }
@@ -136,6 +141,71 @@ class WindowUtils {
   static Future<bool> resetCursor() {
     return _channel.invokeMethod<bool>('resetCursor');
   }
+
+  static String _getCursor(
+      CursorType cursor, MacOSCursorType macOS, WindowsCursorType windows) {
+    if (Platform.isMacOS) {
+      if (macOS != null) {
+        switch (cursor) {
+          case CursorType.arrow:
+            macOS = MacOSCursorType.arrow;
+            break;
+          case CursorType.cross:
+            macOS = MacOSCursorType.crossHair;
+            break;
+          case CursorType.hand:
+            macOS = MacOSCursorType.openHand;
+            break;
+          case CursorType.resizeLeft:
+            macOS = MacOSCursorType.resizeLeft;
+            break;
+          case CursorType.resizeRight:
+            macOS = MacOSCursorType.resizeRight;
+            break;
+          case CursorType.resizeDown:
+            macOS = MacOSCursorType.resizeDown;
+            break;
+          case CursorType.resizeUp:
+            macOS = MacOSCursorType.resizeUp;
+            break;
+          case CursorType.resizeLeftRight:
+            macOS = MacOSCursorType.resizeLeftRight;
+            break;
+          case CursorType.resizeUpDown:
+            macOS = MacOSCursorType.resizeUpDown;
+            break;
+        }
+      }
+      return describeEnum(macOS);
+    }
+    if (Platform.isWindows) {
+      if (windows != null) {
+        switch (cursor) {
+          case CursorType.arrow:
+            windows = WindowsCursorType.arrow;
+            break;
+          case CursorType.cross:
+            windows = WindowsCursorType.cross;
+            break;
+          case CursorType.hand:
+            windows = WindowsCursorType.hand;
+            break;
+          case CursorType.resizeLeftRight:
+          case CursorType.resizeLeft:
+          case CursorType.resizeRight:
+            windows = WindowsCursorType.resizeWE;
+            break;
+          case CursorType.resizeUpDown:
+          case CursorType.resizeDown:
+          case CursorType.resizeUp:
+            windows = WindowsCursorType.resizeNS;
+            break;
+        }
+      }
+      return describeEnum(windows);
+    }
+    return "none";
+  }
 }
 
 enum DragPosition {
@@ -150,6 +220,18 @@ enum DragPosition {
 }
 
 enum CursorType {
+  arrow,
+  cross,
+  hand,
+  resizeLeft,
+  resizeRight,
+  resizeDown,
+  resizeUp,
+  resizeLeftRight,
+  resizeUpDown,
+}
+
+enum MacOSCursorType {
   arrow,
   beamVertical,
   crossHair,
@@ -168,4 +250,21 @@ enum CursorType {
   dragLink,
   dragCopy,
   contextMenu,
+}
+
+enum WindowsCursorType {
+  appStart,
+  arrow,
+  cross,
+  hand,
+  help,
+  iBeam,
+  no,
+  resizeAll,
+  resizeNESW,
+  resizeNS,
+  resizeNWSE,
+  resizeWE,
+  upArrow,
+  wait,
 }

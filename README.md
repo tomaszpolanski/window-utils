@@ -215,23 +215,14 @@ Avaliable cursors:
 ```dart
 enum CursorType {
   arrow,
-  beamVertical,
-  crossHair,
-  closedHand,
-  openHand,
-  pointingHand,
+  cross,
+  hand,
   resizeLeft,
   resizeRight,
   resizeDown,
   resizeUp,
   resizeLeftRight,
   resizeUpDown,
-  beamHorizontial,
-  disappearingItem,
-  notAllowed,
-  dragLink,
-  dragCopy,
-  contextMenu,
 }
 
 ```
@@ -253,23 +244,14 @@ Avaliable cursors:
 ```dart
 enum CursorType {
   arrow,
-  beamVertical,
-  crossHair,
-  closedHand,
-  openHand,
-  pointingHand,
+  cross,
+  hand,
   resizeLeft,
   resizeRight,
   resizeDown,
   resizeUp,
   resizeLeftRight,
   resizeUpDown,
-  beamHorizontial,
-  disappearingItem,
-  notAllowed,
-  dragLink,
-  dragCopy,
-  contextMenu,
 }
 
 ```
