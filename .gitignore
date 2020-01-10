@@ -13,7 +13,7 @@
 *.iml
 *.ipr
 *.iws
-.idea/
+.idea
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
@@ -22,7 +22,7 @@
 
 # Flutter/Dart/Pub related
 **/doc/api/
-.dart_tool/
+.dart_tool
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
@@ -35,3 +35,4 @@ lib/generated_plugin_registrant.dart
 
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
