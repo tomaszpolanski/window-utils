@@ -171,7 +171,7 @@ class _MyAppState extends State<MyApp> {
                   },
                 ),
                 trailing: IconButton(
-                  icon: Icon(Icons.close),
+                  icon: Icon(Icons.restore),
                   onPressed: () {
                     WindowUtils.resetCursor();
                   },
