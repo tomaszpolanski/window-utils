@@ -29,6 +29,7 @@ namespace
 class WindowUtils : public flutter::Plugin
 {
   RECT normalRect;
+  LONG oldStyle;
 
 public:
   static void RegisterWithRegistrar(flutter::PluginRegistrar *registrar);
@@ -79,14 +80,13 @@ void WindowUtils::HandleMethodCall(
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
 {
   std::string method = method_call.method_name();
-  printf("Method is %s \n", method.c_str());
+  // printf("Method is %s \n", method.c_str());
   if (method.compare("hideTitleBar") == 0)
   {
     HWND hWnd = GetActiveWindow();
     SetMenu(hWnd, NULL);
     LONG lStyle = GetWindowLong(hWnd, GWL_STYLE);
-    // lStyle &= ~(WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SYSMENU);
-    // lStyle &= WS_DLGFRAME;
+    oldStyle = lStyle;
     lStyle &= ~(WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SYSMENU | WS_DLGFRAME);
     SetWindowLong(hWnd, GWL_STYLE, lStyle);
     LONG flags = SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER;
@@ -97,8 +97,7 @@ void WindowUtils::HandleMethodCall(
   else if (method.compare("showTitleBar") == 0)
   {
     HWND hWnd = GetActiveWindow();
-    SetMenu(hWnd, NULL);
-    // SetWindowLong(hWnd,GWL_STYLE,WS_EX_LAYERED);
+    SetWindowLong(hWnd, GWL_STYLE, oldStyle);
     flutter::EncodableValue response(true);
     result->Success(&response);
   }
@@ -337,6 +336,111 @@ void WindowUtils::HandleMethodCall(
       umap[flutter::EncodableValue("offsetY")] = flutter::EncodableValue(offsetY);
     }
     flutter::EncodableValue response(umap);
+    result->Success(&response);
+  }
+  else if (method.compare("hideCursor") == 0)
+  {
+    while (ShowCursor(false) >= 0)
+    {
+    }
+    flutter::EncodableValue response(true);
+    result->Success(&response);
+  }
+  else if (method.compare("showCursor") == 0)
+  {
+    while (ShowCursor(true) >= 0)
+    {
+    }
+    flutter::EncodableValue response(true);
+    result->Success(&response);
+  }
+  else if (method.compare("setCursor") == 0)
+  {
+    const flutter::EncodableValue *args = method_call.arguments();
+    const flutter::EncodableMap &map = args->MapValue();
+    bool update = map.at(flutter::EncodableValue("update")).BoolValue();
+    std::string type = map.at(flutter::EncodableValue("type")).StringValue();
+    HCURSOR cursor;
+    HINSTANCE instance = GetModuleHandle(NULL);
+    if (type.compare("appStart") == 0)
+    {
+      LPWSTR type = IDC_APPSTARTING;
+      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+    }
+    else if (type.compare("arrow") == 0)
+    {
+      LPWSTR type = IDC_ARROW;
+      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+    }
+    else if (type.compare("cross") == 0)
+    {
+      LPWSTR type = IDC_CROSS;
+      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+    }
+    else if (type.compare("hand") == 0)
+    {
+      LPWSTR type = IDC_HAND;
+      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+    }
+    else if (type.compare("help") == 0)
+    {
+      LPWSTR type = IDC_HELP;
+      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+    }
+    else if (type.compare("iBeam") == 0)
+    {
+      LPWSTR type = IDC_IBEAM;
+      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+    }
+    else if (type.compare("no") == 0)
+    {
+      LPWSTR type = IDC_NO;
+      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+    }
+    else if (type.compare("resizeAll") == 0)
+    {
+      LPWSTR type = IDC_SIZEALL;
+      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+    }
+    else if (type.compare("resizeNESW") == 0)
+    {
+      LPWSTR type = IDC_SIZENESW;
+      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+    }
+    else if (type.compare("resizeNS") == 0)
+    {
+      LPWSTR type = IDC_SIZENS;
+      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+    }
+    else if (type.compare("resizeNWSE") == 0)
+    {
+      LPWSTR type = IDC_SIZENWSE;
+      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+    }
+    else if (type.compare("resizeWE") == 0)
+    {
+      LPWSTR type = IDC_SIZEWE;
+      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+    }
+    else if (type.compare("upArrow") == 0)
+    {
+      LPWSTR type = IDC_UPARROW;
+      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+    }
+    else if (type.compare("wait") == 0)
+    {
+      LPWSTR type = IDC_WAIT;
+      cursor = LoadCursor(instance, MAKEINTRESOURCE(type));
+    }
+    if (update)
+    {
+      
+    }
+    else
+    {
+      SetCursor(cursor);
+    }
+    flutter::EncodableValue response(true);
     result->Success(&response);
   }
   else
