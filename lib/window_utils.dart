@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class WindowUtils {
-  static const MethodChannel _channel = const MethodChannel('window_utils');
+  static const MethodChannel _channel = MethodChannel('window_utils');
 
-  static Future showTitleBar() {
+  static Future<bool> showTitleBar() {
     return _channel.invokeMethod<bool>('showTitleBar');
   }
 
@@ -35,15 +35,15 @@ class WindowUtils {
 
   static Future<bool> setPosition(Offset offset) {
     return _channel.invokeMethod<bool>('setPosition', {
-      "x": offset.dx,
-      "y": offset.dy,
+      'x': offset.dx,
+      'y': offset.dy,
     });
   }
 
   static Future<bool> setSize(Size size) {
     return _channel.invokeMethod<bool>('setSize', {
-      "width": size.width,
-      "height": size.height,
+      'width': size.width,
+      'height': size.height,
     });
   }
 
@@ -56,16 +56,16 @@ class WindowUtils {
     return _channel.invokeMethod<bool>(
       'startResize',
       {
-        "top": position == DragPosition.top ||
+        'top': position == DragPosition.top ||
             position == DragPosition.topLeft ||
             position == DragPosition.topRight,
-        "bottom": position == DragPosition.bottom ||
+        'bottom': position == DragPosition.bottom ||
             position == DragPosition.bottomLeft ||
             position == DragPosition.bottomRight,
-        "right": position == DragPosition.right ||
+        'right': position == DragPosition.right ||
             position == DragPosition.topRight ||
             position == DragPosition.bottomRight,
-        "left": position == DragPosition.left ||
+        'left': position == DragPosition.left ||
             position == DragPosition.topLeft ||
             position == DragPosition.bottomLeft,
       },
@@ -83,17 +83,20 @@ class WindowUtils {
 
   /// Size of Screen that the current window is inside
   static Future<Size> getScreenSize() async {
-    final _data = await _channel.invokeMethod<Map>('getScreenSize');
+    final _data =
+        await _channel.invokeMethod<Map<String, dynamic>>('getScreenSize');
     return Size(_data['width'] as double, _data['height'] as double);
   }
 
   static Future<Size> getWindowSize() async {
-    final _data = await _channel.invokeMethod<Map>('getWindowSize');
+    final _data =
+        await _channel.invokeMethod<Map<String, dynamic>>('getWindowSize');
     return Size(_data['width'] as double, _data['height'] as double);
   }
 
   static Future<Offset> getWindowOffset() async {
-    final _data = await _channel.invokeMethod<Map>('getWindowOffset');
+    final _data =
+        await _channel.invokeMethod<Map<String, dynamic>>('getWindowOffset');
     return Offset(_data['offsetX'] as double, _data['offsetY'] as double);
   }
 
@@ -109,8 +112,8 @@ class WindowUtils {
     return _channel.invokeMethod<bool>(
       'setCursor',
       {
-        "type": describeEnum(cursor),
-        "update": false,
+        'type': describeEnum(cursor),
+        'update': false,
       },
     );
   }
@@ -119,8 +122,8 @@ class WindowUtils {
     return _channel.invokeMethod<bool>(
       'setCursor',
       {
-        "type": describeEnum(cursor),
-        "update": true,
+        'type': describeEnum(cursor),
+        'update': true,
       },
     );
   }

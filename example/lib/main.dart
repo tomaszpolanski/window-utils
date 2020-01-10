@@ -1,11 +1,9 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import 'package:window_utils/window_utils.dart';
 import 'package:window_utils/window_frame.dart';
+import 'package:window_utils/window_utils.dart';
 
 void main() {
   if (!kIsWeb && debugDefaultTargetPlatformOverride == null) {
@@ -54,7 +52,7 @@ class _MyAppState extends State<MyApp> {
                       });
                     },
                     child: Material(
-                      elevation: 4.0,
+                      elevation: 4,
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
@@ -66,7 +64,7 @@ class _MyAppState extends State<MyApp> {
                         'Window Utils Example',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20.0,
+                          fontSize: 20,
                         ),
                       ),
                     ),
@@ -84,10 +82,13 @@ class _MyAppState extends State<MyApp> {
                           icon: Icon(Icons.info_outline),
                           onPressed: () {
                             WindowUtils.getWindowSize()
+                                // ignore: avoid_print
                                 .then((val) => print('Window: $val'));
                             WindowUtils.getScreenSize()
+                                // ignore: avoid_print
                                 .then((val) => print('Screen: $val'));
                             WindowUtils.getWindowOffset()
+                                // ignore: avoid_print
                                 .then((val) => print('Offset: $val'));
                           },
                         ),
@@ -101,19 +102,19 @@ class _MyAppState extends State<MyApp> {
           body: ListView(
             children: <Widget>[
               ListTile(
-                title: Text("Max Window Size"),
+                title: const Text('Max Window Size'),
                 trailing: IconButton(
                   icon: Icon(Icons.desktop_windows),
                   onPressed: () {
                     WindowUtils.getScreenSize().then((val) async {
                       await WindowUtils.setSize(Size(val.width, val.height));
-                      await WindowUtils.setPosition(Offset(0, 0));
+                      await WindowUtils.setPosition(const Offset(0, 0));
                     });
                   },
                 ),
               ),
               ListTile(
-                title: Text("Increase Window Size"),
+                title: const Text('Increase Window Size'),
                 trailing: IconButton(
                   icon: Icon(Icons.desktop_windows),
                   onPressed: () {
@@ -126,7 +127,7 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
               ListTile(
-                title: Text("Move Window Position"),
+                title: const Text('Move Window Position'),
                 trailing: IconButton(
                   icon: Icon(Icons.drag_handle),
                   onPressed: () {
@@ -139,25 +140,21 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
               ListTile(
-                title: Text("Center Window"),
+                title: const Text('Center Window'),
                 trailing: IconButton(
                   icon: Icon(Icons.vertical_align_center),
-                  onPressed: () {
-                    WindowUtils.centerWindow();
-                  },
+                  onPressed: WindowUtils.centerWindow,
                 ),
               ),
               ListTile(
-                title: Text("Close Window"),
+                title: const Text('Close Window'),
                 trailing: IconButton(
                   icon: Icon(Icons.close),
-                  onPressed: () {
-                    WindowUtils.closeWindow();
-                  },
+                  onPressed: WindowUtils.closeWindow,
                 ),
               ),
               ListTile(
-                title: Text("Change Cursor"),
+                title: const Text('Change Cursor'),
                 // trailing: IconButton(
                 //   icon: Icon(Icons.add),
                 //   onPressed: () {
@@ -175,15 +172,11 @@ class _MyAppState extends State<MyApp> {
                             child: Text(describeEnum(t)),
                           ))
                       .toList(),
-                  onChanged: (val) {
-                    WindowUtils.setCursor(val);
-                  },
+                  onChanged: WindowUtils.setCursor,
                 ),
                 trailing: IconButton(
                   icon: Icon(Icons.close),
-                  onPressed: () {
-                    WindowUtils.resetCursor();
-                  },
+                  onPressed: WindowUtils.resetCursor,
                 ),
               ),
             ],
