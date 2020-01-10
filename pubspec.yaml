@@ -12,8 +12,6 @@ environment:
 flutter:
   plugin:
     platforms:
-      linux:
-        pluginClass: WindowUtils
       macos:
         pluginClass: WindowUtils
       windows:
